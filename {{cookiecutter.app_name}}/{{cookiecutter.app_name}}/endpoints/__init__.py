@@ -1,0 +1,1 @@
+from . import {{cookiecutter.endpoint_name}}
