@@ -4,4 +4,5 @@ How to use this template
 ------------------------
 
  - pip install cookiecutter
- - cookiecutter /path/to/API-Hour/examples/project_template
+ - cookiecutter https://github.com/Eyepea/cookiecutter-API-Hour.git
+
