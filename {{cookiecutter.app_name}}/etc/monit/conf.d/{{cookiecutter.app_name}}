@@ -1,4 +1,4 @@
-check process cache_updater with pidfile /run/lock/{{cookiecutter.app_name}}.pid
+check process cache_updater with pidfile /run/lock/{{cookiecutter.app_name}}_0
 	group {{cookiecutter.app_name}}
 	start program = "/etc/init.d/{{cookiecutter.app_name}} start"
 	stop program = "/etc/init.d/{{cookiecutter.app_name}} stop"
