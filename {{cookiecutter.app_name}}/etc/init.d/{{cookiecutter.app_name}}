@@ -16,7 +16,7 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin
 DAEMONNAME={{cookiecutter.app_name}}
 RUNDIR=/run/$DAEMONNAME
 DAEMON=/opt/{{cookiecutter.app_name}}/${DAEMONNAME}_cli
-PIDFILE=/run/$DAEMONNAME.pid
+PIDFILE=/run/lock/${DAEMONNAME}_0
 DAEMON_ARGS=""
 
 # Exit if the package is not installed
@@ -47,7 +47,7 @@ case "$1" in
     ;;
   stop)
     log_daemon_msg "Stopping" "$DAEMONNAME"
-    if start-stop-daemon --stop --quiet --retry 5 --pidfile $PIDFILE;
+    if start-stop-daemon --stop --retry 5 --pidfile $PIDFILE;
      then
          log_end_msg 0
      else
