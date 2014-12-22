@@ -36,7 +36,7 @@ class Application(api_hour.Application):
     def stop(self):
         # Add your custom end here, example with PostgreSQL:
         if 'pg' in self.engines:
-            self.stores['pg'].clear()
+            self.engines['pg'].clear()
         super().stop()
 
 def main(cli_args):
