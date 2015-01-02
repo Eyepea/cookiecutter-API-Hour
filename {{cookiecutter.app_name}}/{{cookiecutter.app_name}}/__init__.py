@@ -5,7 +5,7 @@ import aiopg
 import psycopg2.extras
 
 import api_hour
-from api_hour.utils import get_config
+import api_hour.aiorest
 
 from . import endpoints
 
@@ -13,11 +13,17 @@ from . import endpoints
 LOG = logging.getLogger(__name__)
 
 
-class Application(api_hour.Application):
+class Container(api_hour.Container):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        # Servers
+        self.servers['http'] = api_hour.aiorest.Application(*args, **kwargs)
+        self.servers['http'].ah_container = self # keep a reference to Container
         # routes
-        self.add_url(['GET', 'POST'], '/{{cookiecutter.endpoint_name}}', endpoints.{{cookiecutter.endpoint_name}}.{{cookiecutter.endpoint_name}})
+        self.servers['http'].add_url(['GET', 'POST'], '/{{cookiecutter.endpoint_name}}', endpoints.{{cookiecutter.endpoint_name}}.{{cookiecutter.endpoint_name}})
+
+    def make_servers(self):
+        return [self.servers['http'].make_handler]
 
     @asyncio.coroutine
     def start(self):
@@ -32,7 +38,7 @@ class Application(api_hour.Application):
                                                                      cursor_factory=psycopg2.extras.RealDictCursor,
                                                                      minsize=int(self.config['engines']['pg']['minsize']),
                                                                      maxsize=int(self.config['engines']['pg']['maxsize'])))
-        yield from asyncio.wait(self.engines.values(), return_when=asyncio.ALL_COMPLETED)
+        yield from asyncio.wait([self.engines['pg']], return_when=asyncio.ALL_COMPLETED)
 
         LOG.info('All engines ready !')
 
@@ -49,11 +55,3 @@ class Application(api_hour.Application):
                 yield from self.engines['pg'].cancel()
         LOG.info('All engines stopped !')
         yield from super().stop()
-
-def main(cli_args):
-    loop = asyncio.get_event_loop()
-
-    config = get_config(vars(cli_args))
-    application = Application(config=config, loop=loop)
-    arbiter = api_hour.Arbiter(config=config, application=application, loop=loop)
-    arbiter.start()

@@ -3,5 +3,5 @@
         "email": "you@example.com",
         "hostname": "your.server.example.com",
         "endpoint_name": "index",
-        "store_name": "data"
+        "service_name": "data"
 }
