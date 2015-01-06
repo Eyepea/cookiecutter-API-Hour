@@ -1,7 +1,9 @@
 import asyncio
 from random import randint
 
-# You can add your business logic here
+"""
+You can add your business logic here
+"""
 
 @asyncio.coroutine
 def get_random_record(container):

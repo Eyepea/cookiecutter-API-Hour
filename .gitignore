@@ -46,7 +46,7 @@ coverage.xml
 *.mo
 *.pot
 
-# Django stuff:
+# Logging
 *.log
 
 # Sphinx documentation
@@ -60,5 +60,6 @@ target/
 *.iml
 
 # Virtualenvs
+.env
 venv/
 pyvenv/

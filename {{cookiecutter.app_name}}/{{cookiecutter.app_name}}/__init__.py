@@ -16,7 +16,9 @@ LOG = logging.getLogger(__name__)
 class Container(api_hour.Container):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Servers
+        ## Servers
+        # You can define several servers, to listen HTTP and SSH for example.
+        # If you do that, you need to listen on two ports with api_hour --bind command line.
         self.servers['http'] = aiohttp.web.Application(loop=kwargs['loop'])
         self.servers['http'].ah_container = self # keep a reference to Container
         # routes
@@ -25,6 +27,7 @@ class Container(api_hour.Container):
                                               endpoints.{{cookiecutter.endpoint_name}}.{{cookiecutter.endpoint_name}})
 
     def make_servers(self):
+        # This method is used by api_hour command line to bind each server on each socket
         return [self.servers['http'].make_handler(logger=self.worker.log,
                                                   debug=self.worker.cfg.debug,
                                                   keep_alive=self.worker.cfg.keepalive,
