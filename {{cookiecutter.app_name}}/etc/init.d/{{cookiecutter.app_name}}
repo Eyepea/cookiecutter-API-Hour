@@ -9,14 +9,14 @@
 # Short-Description: Startup daemon script for {{cookiecutter.app_name}}
 ### END INIT INFO
 #
-# Author: Ludovic Gasc <ludovic.gasc@eyepea.eu>
+# Author: Ludovic Gasc <gmludo@gmail.com>
 set -e
 
-PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin:/opt/{{cookiecutter.app_name}}/pyvenv/bin
 DAEMONNAME={{cookiecutter.app_name}}
 RUNDIR=/run/$DAEMONNAME
-DAEMON=/opt/{{cookiecutter.app_name}}/${DAEMONNAME}_cli
-PIDFILE=/run/lock/${DAEMONNAME}_0
+DAEMON=api_hour
+PIDFILE=/run/lock/${DAEMONNAME}.pid
 DAEMON_ARGS=""
 
 # Exit if the package is not installed

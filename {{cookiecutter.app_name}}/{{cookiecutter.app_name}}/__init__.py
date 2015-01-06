@@ -1,11 +1,11 @@
 import logging
 import asyncio
 
+import aiohttp.web
 import aiopg
 import psycopg2.extras
 
 import api_hour
-import api_hour.aiorest
 
 from . import endpoints
 
@@ -17,19 +17,25 @@ class Container(api_hour.Container):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Servers
-        self.servers['http'] = api_hour.aiorest.Application(*args, **kwargs)
+        self.servers['http'] = aiohttp.web.Application(loop=kwargs['loop'])
         self.servers['http'].ah_container = self # keep a reference to Container
         # routes
-        self.servers['http'].add_url(['GET', 'POST'], '/{{cookiecutter.endpoint_name}}', endpoints.{{cookiecutter.endpoint_name}}.{{cookiecutter.endpoint_name}})
+        self.servers['http'].router.add_route('GET',
+                                              '/{{cookiecutter.endpoint_name}}',
+                                              endpoints.{{cookiecutter.endpoint_name}}.{{cookiecutter.endpoint_name}})
 
     def make_servers(self):
-        return [self.servers['http'].make_handler]
+        return [self.servers['http'].make_handler(logger=self.worker.log,
+                                                  debug=self.worker.cfg.debug,
+                                                  keep_alive=self.worker.cfg.keepalive,
+                                                  access_log=self.worker.log.access_log,
+                                                  access_log_format=self.worker.cfg.access_log_format)]
 
     @asyncio.coroutine
     def start(self):
         yield from super().start()
         LOG.info('Starting engines...')
-        # Add your custom engine here, example with PostgreSQL:
+        # Add your custom engines here, example with PostgreSQL:
         self.engines['pg'] = self.loop.create_task(aiopg.create_pool(host=self.config['engines']['pg']['host'],
                                                                      port=int(self.config['engines']['pg']['port']),
                                                                      dbname=self.config['engines']['pg']['dbname'],
