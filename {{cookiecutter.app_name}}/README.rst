@@ -4,7 +4,7 @@
 Start manually
 --------------
 
-In this current folder, launch: **api_hour {{cookiecutter.app_name}}:Container**
+In this current folder, launch: `api_hour {{cookiecutter.app_name}}:Container`
 
 Install
 -------

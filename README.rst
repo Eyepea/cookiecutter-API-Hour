@@ -1,10 +1,10 @@
+API-Hour Starter Kit (cookiecutter)
+===================================
 
-cookiecutter-API-Hour
-=====================
+* `Cookiecutter <https://github.com/Eyepea/cookiecutter-API-Hour>`_
 
 How to use this template
 ------------------------
 
- - pip install cookiecutter
- - cookiecutter https://github.com/Eyepea/cookiecutter-API-Hour.git
-
+- pip install cookiecutter
+- cookiecutter https://github.com/Eyepea/cookiecutter-API-Hour.git
