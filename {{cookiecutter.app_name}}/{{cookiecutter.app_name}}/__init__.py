@@ -28,6 +28,7 @@ class Container(api_hour.Container):
 
     def make_servers(self):
         # This method is used by api_hour command line to bind each server on each socket
+        # Please don't touch if you don't understand how it works
         return [self.servers['http'].make_handler(logger=self.worker.log,
                                                   debug=self.worker.cfg.debug,
                                                   keep_alive=self.worker.cfg.keepalive,
@@ -41,6 +42,7 @@ class Container(api_hour.Container):
         # Add your custom engines here, example with PostgreSQL:
         self.engines['pg'] = self.loop.create_task(aiopg.create_pool(host=self.config['engines']['pg']['host'],
                                                                      port=int(self.config['engines']['pg']['port']),
+                                                                     sslmode='disable',
                                                                      dbname=self.config['engines']['pg']['dbname'],
                                                                      user=self.config['engines']['pg']['user'],
                                                                      password=self.config['engines']['pg']['password'],
