@@ -16,6 +16,10 @@ LOG = logging.getLogger(__name__)
 class Container(api_hour.Container):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        if self.config is None: # Remove this line if you don't want to use API-Hour config file
+            raise ValueError('An API-Hour config dir is needed.')
+
         ## Servers
         # You can define several servers, to listen HTTP and SSH for example.
         # If you do that, you need to listen on two ports with api_hour --bind command line.
@@ -28,7 +32,6 @@ class Container(api_hour.Container):
 
     def make_servers(self):
         # This method is used by api_hour command line to bind each server on each socket
-        # Please don't touch if you don't understand how it works
         return [self.servers['http'].make_handler(logger=self.worker.log,
                                                   debug=self.worker.cfg.debug,
                                                   keep_alive=self.worker.cfg.keepalive,
