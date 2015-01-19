@@ -12,10 +12,11 @@
 # Author: Ludovic Gasc <gmludo@gmail.com>
 set -e
 
-PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin:/opt/{{cookiecutter.app_name}}/pyvenv/bin
+EXECUTABLE_PATH=/opt/{{cookiecutter.app_name}}/pyvenv/bin
+PATH=$EXECUTABLE_PATH:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin
 DAEMONNAME={{cookiecutter.app_name}}
 RUNDIR=/run/$DAEMONNAME
-DAEMON=api_hour
+DAEMON=$EXECUTABLE_PATH/api_hour
 PIDFILE=/run/lock/${DAEMONNAME}.pid
 DAEMON_ARGS=""
 
@@ -26,7 +27,7 @@ DAEMON_ARGS=""
 [ -d "$RUNDIR" ] || mkdir -p "$RUNDIR"
 
 # Read configuration variable file if it is present
-[ -r /etc/default/$NAME ] && . /etc/default/$NAME
+[ -r /etc/default/$DAEMONNAME ] && . /etc/default/$DAEMONNAME
 
 # Load the VERBOSE setting and other rcS variables
 [ -f /etc/default/rcS ] && . /etc/default/rcS
