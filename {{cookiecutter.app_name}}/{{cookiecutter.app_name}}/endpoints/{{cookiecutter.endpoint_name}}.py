@@ -24,7 +24,7 @@ def {{cookiecutter.endpoint_name}}(request):
 # @asyncio.coroutine
 # def db(request):
 #     """Test type 2: Single database query"""
-#     container = request.app.ah_container
+#     container = request.app['ah_container']
 #
 #     return JSON((yield from get_random_record(container)))
 #
