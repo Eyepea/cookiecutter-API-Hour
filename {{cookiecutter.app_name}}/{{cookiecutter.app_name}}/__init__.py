@@ -50,7 +50,8 @@ class Container(api_hour.Container):
                                                                      password=self.config['engines']['pg']['password'],
                                                                      cursor_factory=psycopg2.extras.RealDictCursor,
                                                                      minsize=int(self.config['engines']['pg']['minsize']),
-                                                                     maxsize=int(self.config['engines']['pg']['maxsize'])))
+                                                                     maxsize=int(self.config['engines']['pg']['maxsize']),
+                                                                     loop=self.loop))
         yield from asyncio.wait([self.engines['pg']], return_when=asyncio.ALL_COMPLETED)
 
         LOG.info('All engines ready !')
