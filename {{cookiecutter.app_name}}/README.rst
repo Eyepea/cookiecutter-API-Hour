@@ -23,6 +23,7 @@ Install
 #. update-rc.d {{cookiecutter.app_name}} defaults
 #. cp -a /opt/{{cookiecutter.app_name}}/etc/{{cookiecutter.app_name}} /etc/
 #. Adapt rsyslog and lograte
+#. For logrotate config file, apply the access rights: rw-r--r--
 #. service {{cookiecutter.app_name}} start
 
 To restart automatically daemon if it crashes
