@@ -1,0 +1,31 @@
+---
+- name: Install {{cookiecutter.app_name}} on a server
+  hosts: {{cookiecutter.server_name}}
+  gather_facts: False
+  tasks:
+        - name: Clone project
+          git: repo={{cookiecutter.git_repository}}:{{cookiecutter.app_name}} dest=/opt/{{cookiecutter.app_name}}
+
+        - name: Install requirements
+          pip: requirements=/opt/{{cookiecutter.app_name}}/requirements.txt
+               virtualenv=/opt/{{cookiecutter.app_name}}/pyvenv
+               virtualenv_command=/usr/local/pythonz/pythons/CPython-3.4.2/bin/pyvenv
+
+        - name: Create log dir
+          file: dest=/var/log/{{cookiecutter.app_name}} owner=root group=root state=directory
+
+        - name: Link default config file
+          file: state=link dest=/etc/default/{{cookiecutter.app_name}} src=/opt/{{cookiecutter.app_name}}/etc/default/{{cookiecutter.app_name}}
+
+        - name: Link startup script
+          file: state=link dest=/etc/init.d/{{cookiecutter.app_name}} src=/opt/{{cookiecutter.app_name}}/etc/init.d/{{cookiecutter.app_name}}
+
+        - name: Make it start with the system
+          command: update-rc.d {{cookiecutter.app_name}} defaults
+          args:
+            creates: "/etc/rc*.d/*{{cookiecutter.app_name}}"
+
+        - name: Copy the template configuration file to etc
+          command: cp -a /opt/{{cookiecutter.app_name}}/etc/{{cookiecutter.app_name}} /etc/
+          args:
+            creates: "/etc/{{cookiecutter.app_name}}"

@@ -1,0 +1,19 @@
+---
+- name: Install {{cookiecutter.app_name}} on a server
+  hosts: {{cookiecutter.server_name}}
+  gather_facts: False
+  tasks:
+        - name: Update main repo
+          command: "git push"
+          delegate_to: localhost
+
+        - name: Pull the fresh code
+          git: repo={{cookiecutter.git_repository}}:{{cookiecutter.app_name}} dest=/opt/{{cookiecutter.app_name}}
+
+        - name: Install requirements
+          pip: requirements=/opt/{{cookiecutter.app_name}}/requirements.txt
+               virtualenv=/opt/{{cookiecutter.app_name}}/pyvenv
+               virtualenv_command=/usr/local/pythonz/pythons/CPython-3.4.2/bin/pyvenv
+
+        - name: Restart the service
+          service: name={{cookiecutter.app_name}} state=restarted
