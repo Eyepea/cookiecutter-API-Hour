@@ -18,6 +18,7 @@ Install
 #. . pyvenv/bin/activate
 #. pip install -r requirements.txt
 #. cd /etc/init.d/ && ln -s /opt/{{cookiecutter.app_name}}/etc/init.d/{{cookiecutter.app_name}}
+#. To define right boot order for your daemon (for example, your daemon needs PostgreSQL), customize file header of: /opt/{{cookiecutter.app_name}}/etc/default/{{cookiecutter.app_name}}
 #. cd /etc/default/ && ln -s /opt/{{cookiecutter.app_name}}/etc/default/{{cookiecutter.app_name}}
 #. update-rc.d {{cookiecutter.app_name}} defaults
 #. cp -a /opt/{{cookiecutter.app_name}}/etc/{{cookiecutter.app_name}} /etc/
