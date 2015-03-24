@@ -8,7 +8,7 @@
           delegate_to: localhost
 
         - name: Pull the fresh code
-          git: repo={{cookiecutter.git_repository}}:{{cookiecutter.app_name}} dest=/opt/{{cookiecutter.app_name}}
+          git: repo={{cookiecutter.git_repository}} dest=/opt/{{cookiecutter.app_name}}
 
         - name: Install requirements
           pip: requirements=/opt/{{cookiecutter.app_name}}/requirements.txt
