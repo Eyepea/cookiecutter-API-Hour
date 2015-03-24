@@ -6,15 +6,29 @@ Start manually
 
 In this current folder, launch: `api_hour -ac {{cookiecutter.app_name}}:Container`
 
-Install
--------
+Deploy using Ansible
+--------------------
+
+#. `ansible-playbook ansible/install.yml`
+#. Customize config files in /etc/
+#. Merge init/defaults scripts
+#. Adapt rsyslog and lograte
+#. service {{cookiecutter.app_name}} start
+
+Deploy new version using Ansible
+--------------------------------
+
+#. `ansible-playbook ansible/update.yml`
+
+Manual install
+--------------
 
 #. Follow pythonz install doc: https://github.com/saghul/pythonz
-#. pythonz install 3.4.2
+#. pythonz install 3.4.3
 #. cd /opt
 #. Git clone your app here
 #. cd /opt/{{cookiecutter.app_name}}/
-#. /usr/local/pythonz/pythons/CPython-3.4.2/bin/pyvenv pyvenv
+#. /usr/local/pythonz/pythons/CPython-3.4.3/bin/pyvenv pyvenv
 #. . pyvenv/bin/activate
 #. pip install -r requirements.txt
 #. cd /etc/init.d/ && ln -s /opt/{{cookiecutter.app_name}}/etc/init.d/{{cookiecutter.app_name}}
@@ -22,7 +36,7 @@ Install
 #. cd /etc/default/ && ln -s /opt/{{cookiecutter.app_name}}/etc/default/{{cookiecutter.app_name}}
 #. update-rc.d {{cookiecutter.app_name}} defaults
 #. cp -a /opt/{{cookiecutter.app_name}}/etc/{{cookiecutter.app_name}} /etc/
-#. Adapt rsyslog and lograte
+#. Adapt rsyslog and logrotate
 #. service {{cookiecutter.app_name}} start
 
 To restart automatically daemon if it crashes

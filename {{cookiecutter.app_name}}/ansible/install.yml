@@ -4,12 +4,12 @@
   gather_facts: False
   tasks:
         - name: Clone project
-          git: repo={{cookiecutter.git_repository}}:{{cookiecutter.app_name}} dest=/opt/{{cookiecutter.app_name}}
+          git: repo={{cookiecutter.git_repository}} dest=/opt/{{cookiecutter.app_name}}
 
         - name: Install requirements
           pip: requirements=/opt/{{cookiecutter.app_name}}/requirements.txt
                virtualenv=/opt/{{cookiecutter.app_name}}/pyvenv
-               virtualenv_command=/usr/local/pythonz/pythons/CPython-3.4.2/bin/pyvenv
+               virtualenv_command=/usr/local/pythonz/pythons/CPython-3.4.3/bin/pyvenv
 
         - name: Create log dir
           file: dest=/var/log/{{cookiecutter.app_name}} owner=root group=root state=directory
