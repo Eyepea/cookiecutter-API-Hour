@@ -1,6 +1,7 @@
 ---
 - name: Install {{cookiecutter.app_name}} on a server
-  hosts: {{cookiecutter.server_name}}
+  hosts:
+        - {{cookiecutter.server_name}}
   gather_facts: False
   tasks:
         - name: Update main repo

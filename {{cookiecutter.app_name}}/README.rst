@@ -9,10 +9,9 @@ In this current folder, launch: `api_hour -ac {{cookiecutter.app_name}}:Containe
 Deploy using Ansible
 --------------------
 
-#. `ansible-playbook ansible/install.yml`
-#. Customize config files in /etc/
-#. Merge init/defaults scripts
-#. Adapt rsyslog and lograte
+#. `ansible-playbook ansible/install.yml -i ansible/inventory`
+#. Customize config files in /etc/{{cookiecutter.app_name}}/
+#. Merge rsyslog config file
 #. service {{cookiecutter.app_name}} start
 
 Deploy new version using Ansible

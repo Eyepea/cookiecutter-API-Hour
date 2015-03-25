@@ -1,8 +1,21 @@
 ---
 - name: Install {{cookiecutter.app_name}} on a server
-  hosts: {{cookiecutter.server_name}}
-  gather_facts: False
+  hosts:
+        - {{cookiecutter.server_name}}
+  gather_facts: True
   tasks:
+        - name: Install packages on Debian
+          apt: name={{item}} state=present
+          when: ansible_os_family == 'Debian'
+          with_items:
+            - git
+
+        - name: Install packages on CentOS
+          yum: name=git state=present
+          when: ansible_os_family == 'RedHat'
+          with_items:
+            - git
+
         - name: Clone project
           git: repo={{cookiecutter.git_repository}} dest=/opt/{{cookiecutter.app_name}}
 
@@ -19,6 +32,9 @@
 
         - name: Link startup script
           file: state=link dest=/etc/init.d/{{cookiecutter.app_name}} src=/opt/{{cookiecutter.app_name}}/etc/init.d/{{cookiecutter.app_name}}
+
+        - name: Link logrotate config file
+          file: state=link dest=/etc/logrotate.d/{{cookiecutter.app_name}} src=/opt/call_control/etc/logrotate.d/{{cookiecutter.app_name}}
 
         - name: Make it start with the system
           command: update-rc.d {{cookiecutter.app_name}} defaults

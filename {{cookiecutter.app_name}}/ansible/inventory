@@ -1,0 +1,1 @@
+{{cookiecutter.server_name}} ansible_ssh_user=root
