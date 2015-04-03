@@ -34,7 +34,7 @@
           file: state=link dest=/etc/init.d/{{cookiecutter.app_name}} src=/opt/{{cookiecutter.app_name}}/etc/init.d/{{cookiecutter.app_name}}
 
         - name: Link logrotate config file
-          file: state=link dest=/etc/logrotate.d/{{cookiecutter.app_name}} src=/opt/call_control/etc/logrotate.d/{{cookiecutter.app_name}}
+          file: state=link dest=/etc/logrotate.d/{{cookiecutter.app_name}} src=/opt/{{cookiecutter.app_name}}/etc/logrotate.d/{{cookiecutter.app_name}}
 
         - name: Make it start with the system
           service: name={{cookiecutter.app_name}} enabled=yes
