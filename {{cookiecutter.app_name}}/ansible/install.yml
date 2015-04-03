@@ -37,9 +37,7 @@
           file: state=link dest=/etc/logrotate.d/{{cookiecutter.app_name}} src=/opt/call_control/etc/logrotate.d/{{cookiecutter.app_name}}
 
         - name: Make it start with the system
-          command: update-rc.d {{cookiecutter.app_name}} defaults
-          args:
-            creates: "/etc/rc*.d/*{{cookiecutter.app_name}}"
+          service: name={{cookiecutter.app_name}} enabled=yes
 
         - name: Copy the template configuration file to etc
           command: cp -a /opt/{{cookiecutter.app_name}}/etc/{{cookiecutter.app_name}} /etc/
