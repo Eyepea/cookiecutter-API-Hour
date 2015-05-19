@@ -15,8 +15,8 @@ develop-eggs/
 dist/
 downloads/
 eggs/
-lib/
-lib64/
+/lib/
+/lib64/
 parts/
 sdist/
 var/
@@ -60,5 +60,5 @@ target/
 *.iml
 
 # Virtualenvs
-venv/
-pyvenv/
+venv*/
+pyvenv*/
