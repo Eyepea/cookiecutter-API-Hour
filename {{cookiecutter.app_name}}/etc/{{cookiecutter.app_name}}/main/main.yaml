@@ -1,4 +1,6 @@
 ---
+main:
+  example_key: example_value
 engines:
   pg:
     host: 127.0.0.1
