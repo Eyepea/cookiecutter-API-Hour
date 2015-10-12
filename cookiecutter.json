@@ -5,5 +5,5 @@
         "endpoint_name": "index",
         "service_name": "data",
         "server_name": "web.example.com",
-        "git_repository": "git@github.com"
+        "git_repository": "https://github.com/your_username/example"
 }

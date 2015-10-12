@@ -5,13 +5,13 @@
   gather_facts: True
   tasks:
         - name: Install packages on Debian
-          apt: name={{item}} state=present
+          apt: name={{ '{{' }}item{{ '}}' }} state=present
           when: ansible_os_family == 'Debian'
           with_items:
             - git
 
         - name: Install packages on CentOS
-          yum: name=git state=present
+          yum: name={{ '{{' }}item{{ '}}' }} state=present
           when: ansible_os_family == 'RedHat'
           with_items:
             - git
