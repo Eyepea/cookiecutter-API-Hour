@@ -10,8 +10,7 @@ LOG = logging.getLogger(__name__)
 You handle inputs with outside world here
 """
 
-@asyncio.coroutine
-def {{cookiecutter.endpoint_name}}(request):
+async def {{cookiecutter.endpoint_name}}(request):
     return JSON({
         'index': 'hello!'
     })
@@ -20,10 +19,9 @@ def {{cookiecutter.endpoint_name}}(request):
 
 # from ..services.{{cookiecutter.service_name}} import get_random_record
 #
-# @asyncio.coroutine
-# def db(request):
+# async def db(request):
 #     """Test type 2: Single database query"""
 #     container = request.app['ah_container']
 #
-#     return JSON((yield from get_random_record(container)))
+#     return JSON((await get_random_record(container)))
 #

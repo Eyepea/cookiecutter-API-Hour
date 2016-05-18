@@ -23,11 +23,11 @@ Manual install
 --------------
 
 #. Follow pythonz install doc: https://github.com/saghul/pythonz
-#. pythonz install 3.4.3
+#. pythonz install 3.5.1
 #. cd /opt
 #. Git clone your app here
 #. cd /opt/{{cookiecutter.app_name}}/
-#. /usr/local/pythonz/pythons/CPython-3.4.3/bin/pyvenv pyvenv
+#. /usr/local/pythonz/pythons/CPython-3.5.1/bin/pyvenv pyvenv
 #. . pyvenv/bin/activate
 #. pip install -r requirements.txt
 #. cd /etc/init.d/ && ln -s /opt/{{cookiecutter.app_name}}/etc/init.d/{{cookiecutter.app_name}}

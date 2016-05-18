@@ -30,21 +30,19 @@ class Container(api_hour.Container):
                                               '/{{cookiecutter.endpoint_name}}',
                                               endpoints.{{cookiecutter.endpoint_name}}.{{cookiecutter.endpoint_name}})
 
-    @asyncio.coroutine
-    def make_servers(self, sockets):
+    async def make_servers(self, sockets):
         # This coroutine is used by api_hour command line to have the list of handlers
         handlers = {}
         handler = self.servers['http'].make_handler(logger=self.worker.log,
                                                     keep_alive=self.worker.cfg.keepalive,
                                                     access_log=self.worker.log.access_log)
         for sock in sockets:
-            srv = yield from self.loop.create_server(handler, sock=sock.sock)
+            srv = await self.loop.create_server(handler, sock=sock.sock)
             handlers[srv] = handler
         return handlers
 
-    @asyncio.coroutine
-    def start(self):
-        yield from super().start()
+    async def start(self):
+        await super().start()
         LOG.info('Starting engines...')
         # Add your custom engines here, example with PostgreSQL:
         self.engines['pg'] = self.loop.create_task(aiopg.create_pool(host=self.config['engines']['pg']['host'],
@@ -57,20 +55,19 @@ class Container(api_hour.Container):
                                                                      minsize=int(self.config['engines']['pg']['minsize']),
                                                                      maxsize=int(self.config['engines']['pg']['maxsize']),
                                                                      loop=self.loop))
-        yield from asyncio.wait([self.engines['pg']], return_when=asyncio.ALL_COMPLETED)
+        await asyncio.wait([self.engines['pg']], return_when=asyncio.ALL_COMPLETED)
 
         LOG.info('All engines ready !')
 
 
-    @asyncio.coroutine
-    def stop(self):
+    async def stop(self):
         LOG.info('Stopping engines...')
         # Add your custom end here, example with PostgreSQL:
         if 'pg' in self.engines:
             if self.engines['pg'].done():
                 self.engines['pg'].result().terminate()
-                yield from self.engines['pg'].result().wait_closed()
+                await self.engines['pg'].result().wait_closed()
             else:
-                yield from self.engines['pg'].cancel()
+                await self.engines['pg'].cancel()
         LOG.info('All engines stopped !')
-        yield from super().stop()
+        await super().stop()

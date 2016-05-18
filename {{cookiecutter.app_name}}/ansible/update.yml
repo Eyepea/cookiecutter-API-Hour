@@ -14,7 +14,7 @@
         - name: Install requirements
           pip: requirements=/opt/{{cookiecutter.app_name}}/requirements.txt
                virtualenv=/opt/{{cookiecutter.app_name}}/pyvenv
-               virtualenv_command=/usr/local/pythonz/pythons/CPython-3.4.3/bin/pyvenv
+               virtualenv_command=/usr/local/pythonz/pythons/CPython-3.5.1/bin/pyvenv
 
         - name: Restart the service
           service: name={{cookiecutter.app_name}} state=restarted
