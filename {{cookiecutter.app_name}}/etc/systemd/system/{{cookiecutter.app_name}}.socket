@@ -1,0 +1,8 @@
+[Unit]
+Description={{cookiecutter.app_name}} socket
+
+[Socket]
+ListenStream=0.0.0.0:8001
+
+[Install]
+WantedBy=sockets.target
