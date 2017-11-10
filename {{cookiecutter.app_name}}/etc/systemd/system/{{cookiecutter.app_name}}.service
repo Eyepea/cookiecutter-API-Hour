@@ -2,6 +2,9 @@
 Description={{cookiecutter.app_name}} daemon
 Requires={{cookiecutter.app_name}}.socket
 After=network.target
+AssertPathExists=/opt/{{cookiecutter.app_name}}/pyvenv/bin/api_hour
+AssertPathExists=/etc/{{cookiecutter.app_name}}
+AssertPathExists=/opt/{{cookiecutter.app_name}}/{{cookiecutter.app_name}}/__init__.py
 
 [Service]
 Type=simple
@@ -9,6 +12,7 @@ PIDFile=/run/lock/{{cookiecutter.app_name}}.pid
 User=root
 Group=root
 Environment="PYTHONPATH=."
+Environment="PYTHONUNBUFFERED=true"
 WorkingDirectory=/opt/{{cookiecutter.app_name}}
 ExecStart=/opt/{{cookiecutter.app_name}}/pyvenv/bin/api_hour -ac --config_dir=/etc/{{cookiecutter.app_name}} {{cookiecutter.app_name}}:Container
 ExecReload=/bin/kill -s HUP $MAINPID
@@ -16,6 +20,9 @@ ExecStop=/bin/kill -s TERM $MAINPID
 PrivateTmp=true
 Restart=always
 RestartSec=4
+KillSignal=SIGTERM
+SendSIGKILL=yes
+LimitNOFILE=65535
 
 [Install]
 WantedBy=multi-user.target
